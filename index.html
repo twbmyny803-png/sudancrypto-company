@@ -1,814 +1,533 @@
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-const { Resend } = require("resend");
-const mongoose = require("mongoose");
-const fs = require("fs");
-const multer = require("multer");
-const crypto = require("crypto");
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>SudanCrypto LLC | منصة الاستثمار الرقمي</title>
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Google Font - Cairo -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Cairo', sans-serif;
+    background: #0B0E11; /* لون خلفية مثل Binance */
+    color: #EAECEF;
+    line-height: 1.5;
+    overflow-x: hidden;
+    width: 100%;
+}
+/* ألوان Binance: الذهبي المائل للأصفر #F0B90B */
+:root {
+    --primary: #F0B90B;
+    --primary-dark: #d6a405;
+    --bg-dark: #0B0E11;
+    --card-bg: #1E2329;
+    --border-color: #2E333A;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1E2329; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-if (!fs.existsSync("uploads")) {
-  fs.mkdirSync("uploads");
+.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(11, 14, 17, 0.96);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.logo h2 {
+    color: var(--primary);
+    font-size: 22px;
+    font-weight: 800;
+}
+.logo p {
+    font-size: 9px;
+    opacity: 0.7;
+}
+.nav-links {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+.nav-links a {
+    color: #EAECEF;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    font-size: 14px;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--primary); }
+.nav-links a i { margin-left: 5px; }
+.menu-icon { display: none; font-size: 26px; color: var(--primary); cursor: pointer; }
 
-// 🔐 Resend
-const resend = new Resend("re_NBwHrNvM_8V7mPxiSistfrYy1B5DXTZDg");
+/* Hero */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: radial-gradient(circle at 20% 30%, #0B0E11, #030405);
+    padding-top: 80px;
+    padding-bottom: 50px;
+}
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
+.hero h1 { font-size: 40px; font-weight: 800; margin-bottom: 18px; line-height: 1.2; }
+.hero h1 span { color: var(--primary); }
+.hero p { font-size: 16px; opacity: 0.85; margin-bottom: 25px; }
+.btn-gold {
+    background: var(--primary);
+    color: #0B0E11;
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,185,11,0.3); }
+.hero-stats { display: flex; gap: 30px; margin-top: 35px; flex-wrap: wrap; }
+.stat h3 { font-size: 28px; color: var(--primary); }
+.stat p { font-size: 13px; opacity: 0.7; }
 
-// 🔥 ربط MongoDB
-mongoose.connect("mongodb+srv://maynwsmanswy_db_user:hOrkK68kCma6kJB5@cluster0.w0jrqw.mongodb.net/sudancrypto?retryWrites=true&w=majority")
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.log("❌ MongoDB error:", err));
+/* Sections */
+.section { padding: 60px 0; }
+.section-title { text-align: center; font-size: 30px; margin-bottom: 35px; font-weight: 700; }
+.section-title span { color: var(--primary); border-bottom: 3px solid var(--primary); padding-bottom: 5px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+.card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 28px 20px;
+    transition: 0.3s;
+    border: 1px solid var(--border-color);
+}
+.card:hover { transform: translateY(-5px); border-color: var(--primary); }
+.card-icon { font-size: 45px; color: var(--primary); margin-bottom: 18px; }
 
-// ================== إضافات فوق ==================
-let codes = {};
-let resetCodes = {};
-let withdrawRequests = [];
-
-// 📦 Schema (Updated)
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  phone: String,
-  password: String,
-  ref: String,
-  refCode: String,
-  refBy: String,
-
-  balance: { type: Number, default: 0 },
-  incomeBalance: { type: Number, default: 0 },
-
-  isVerified: { type: Boolean, default: false },
-  verificationStatus: { type: String, default: 'none' },
-
-  isBlocked: { type: Boolean, default: false },
-  isFrozen: { type: Boolean, default: false },
-
-  withdrawBlocked: { type: Boolean, default: false },
-  withdrawPassword: { type: String, default: null },
-
-  packageName: String,
-  packageStart: Date,
-  packageDurationDays: Number,
-  dailyProfit: Number,
-
-  verificationFullName: String,
-  verificationDocType: String,
-  verificationDocNumber: String,
-  verificationImages: [String],
-  verificationRejectReason: { type: String, default: null }
-});
-
-const User = mongoose.model("User", userSchema);
-
-// 🧩 4. عدل Schema (أضف name)
-const depositSchema = new mongoose.Schema({
-  email: String,
-  name: String,
-  amount: Number,
-  txid: String,
-  image: String,
-  orderId: String,
-
-  packageName: String, // 🔥 تضيف دي
-  network: String,     // 🔥 تضيف دي
-
-  status: { type: String, default: "pending" },
-  createdAt: { type: Date, default: Date.now }
-});
-
-const Deposit = mongoose.model("Deposit", depositSchema);
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9) + path.extname(file.originalname);
-    cb(null, uniqueName);
-  }
-});
-
-const upload = multer({ storage });
-
-// ملفات الموقع (تأكد أن ملفات الأدمن داخل مجلد public)
-app.use(express.static(path.join(__dirname, "public")));
-
-function generateRefCode() {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "";
-  for (let i = 0; i < 8; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
+/* Legal certificate */
+.legal-cert {
+    background: var(--card-bg);
+    border-radius: 28px;
+    padding: 30px 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    margin: 30px 0;
+}
+.legal-cert i { font-size: 55px; color: var(--primary); margin-bottom: 15px; }
+.badge-gold {
+    background: rgba(240,185,11,0.15);
+    padding: 5px 12px;
+    border-radius: 30px;
+    color: var(--primary);
+    font-size: 12px;
+    display: inline-block;
+    margin: 4px;
 }
 
-// ================== إرسال كود ==================
-app.post("/send-code", async (req, res) => {
-  const { email } = req.body;
+/* Pricing */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+.pricing-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 28px 15px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid var(--border-color);
+}
+.pricing-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+.price { font-size: 32px; font-weight: 800; color: var(--primary); margin: 15px 0; }
+.daily-profit { background: rgba(240,185,11,0.15); padding: 8px; border-radius: 40px; color: var(--primary); font-weight: bold; margin: 12px 0; font-size: 14px; }
 
-  if (!email) {
-    return res.json({ success: false, message: "أدخل الإيميل" });
-  }
+/* Warranty */
+.warranty-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 20px; }
+.warranty-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 28px 18px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+.warranty-icon { font-size: 48px; color: var(--primary); margin-bottom: 15px; }
+.warranty-card h3 { font-size: 22px; margin-bottom: 10px; }
 
-  const exists = await User.findOne({ email });
+/* FAQ */
+.faq-item {
+    background: var(--card-bg);
+    border-radius: 18px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+}
+.faq-question i { color: var(--primary); transition: 0.3s; }
+.faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: 0.4s ease; color: #b0b3b8; font-size: 14px; }
+.faq-item.active .faq-answer { padding: 0 20px 18px; max-height: 400px; }
 
-  if (exists) {
-    return res.json({
-      success: false,
-      message: "هذا البريد مسجل بالفعل"
+/* News */
+.news-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.news-img { height: 150px; background: linear-gradient(135deg, var(--primary), #b8860b); display: flex; align-items: center; justify-content: center; font-size: 45px; }
+.news-content { padding: 20px; }
+.news-date { color: var(--primary); font-size: 12px; margin-bottom: 8px; }
+.news-content h3 { font-size: 18px; margin-bottom: 8px; }
+
+/* Payment Methods (محدث) */
+.payment-methods {
+    background: var(--card-bg);
+    border-radius: 28px;
+    padding: 30px;
+    margin: 30px 0;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+.payment-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 20px;
+}
+.payment-item {
+    background: #0B0E11;
+    padding: 12px 22px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+}
+.payment-item i { font-size: 28px; color: var(--primary); }
+.payment-item span { font-weight: 600; }
+.coming-soon {
+    background: rgba(240,185,11,0.1);
+    border: 1px dashed var(--primary);
+    color: var(--primary);
+}
+
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; }
+.contact-info { background: var(--card-bg); border-radius: 24px; padding: 28px; border: 1px solid var(--border-color); }
+.contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 22px; }
+.contact-icon { width: 48px; height: 48px; background: rgba(240,185,11,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 14px; margin-bottom: 15px; background: #0B0E11; border: 1px solid var(--border-color); border-radius: 14px; color: #EAECEF; font-family: inherit; font-size: 14px; }
+
+/* Footer */
+footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top: 1px solid var(--border-color); }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 35px; }
+.social-links a { display: inline-block; margin-left: 15px; color: #EAECEF; font-size: 22px; transition: 0.3s; }
+.social-links a:hover { color: var(--primary); }
+
+/* ========== RESPONSIVE جوال ممتاز ========== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+    .navbar {
+        padding: 12px 0;
+    }
+    .logo h2 {
+        font-size: 20px;
+    }
+    .logo p {
+        font-size: 8px;
+    }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #0B0E11;
+        padding: 20px;
+        border-radius: 20px;
+        margin-top: 15px;
+        gap: 12px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+    }
+    .nav-links.show {
+        display: flex;
+    }
+    .menu-icon {
+        display: block;
+    }
+    .hero {
+        padding-top: 90px;
+        padding-bottom: 40px;
+        min-height: auto;
+    }
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        text-align: center;
+    }
+    .hero h1 {
+        font-size: 30px;
+    }
+    .hero p {
+        font-size: 14px;
+    }
+    .hero-stats {
+        justify-content: center;
+        gap: 20px;
+    }
+    .stat h3 {
+        font-size: 24px;
+    }
+    .hero-content div:last-child i {
+        font-size: 110px !important;
+    }
+    .section {
+        padding: 45px 0;
+    }
+    .section-title {
+        font-size: 26px;
+        margin-bottom: 30px;
+    }
+    .card, .pricing-card, .warranty-card, .legal-cert {
+        padding: 20px 15px;
+    }
+    .card h3 {
+        font-size: 20px;
+    }
+    .price {
+        font-size: 28px;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <h2>SudanCrypto LLC</h2>
+            <p><i class="fas fa-globe"></i> مستقبل الاستثمار الرقمي</p>
+        </div>
+        <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+        <div class="nav-links" id="navLinks">
+            <a href="#home" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="#about"><i class="fas fa-info-circle"></i> من نحن</a>
+            <a href="#packages"><i class="fas fa-layer-group"></i> الباقات</a>
+            <a href="#warranty"><i class="fas fa-shield-alt"></i> الضمانات</a>
+            <a href="#contact"><i class="fas fa-headset"></i> الدعم</a>
+        </div>
+    </div>
+</nav>
+
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div>
+                <h1>استثمر بذكاء في <span>العملات الرقمية</span></h1>
+                <p>منصة SudanCrypto LLC توفر لك بيئة استثمارية آمنة ومضمونة بعوائد يومية تصل إلى 20%، مع حماية كاملة لرأس مالك.</p>
+                <a href="#packages" class="btn-gold">ابدأ الاستثمار الآن <i class="fas fa-rocket"></i></a>
+                <div class="hero-stats">
+                    <div class="stat"><h3>+10K</h3><p><i class="fas fa-users"></i> مستثمر نشط</p></div>
+                    <div class="stat"><h3>$50M+</h3><p><i class="fas fa-chart-pie"></i> أصول مدارة</p></div>
+                    <div class="stat"><h3>24/7</h3><p><i class="fas fa-clock"></i> دعم فني</p></div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <i class="fas fa-chart-line" style="font-size: 180px; color: var(--primary); filter: drop-shadow(0 0 20px rgba(240,185,11,0.4));"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <div class="container">
+        <h2 class="section-title">لماذا <span>SudanCrypto؟</span></h2>
+        <div class="grid-3">
+            <div class="card"><div class="card-icon"><i class="fas fa-shield-check"></i></div><h3>أمان فائق</h3><p>نستخدم أحدث تقنيات التشفير والذكاء الاصطناعي لتأمين محفظتك الاستثمارية.</p></div>
+            <div class="card"><div class="card-icon"><i class="fas fa-hand-holding-dollar"></i></div><h3>أرباح يومية</h3><p>استلم أرباحك بشكل يومي ومباشر في محفظتك دون أي تأخير.</p></div>
+            <div class="card"><div class="card-icon"><i class="fas fa-user-shield"></i></div><h3>ضمان رأس المال</h3><p>نضمن لك استرداد رأس مالك بالكامل في أي وقت حسب شروط الباقة.</p></div>
+        </div>
+
+        <div class="legal-cert">
+            <i class="fas fa-file-contract"></i>
+            <h3>ترخيص قانوني معتمد</h3>
+            <p>SudanCrypto LLC مسجلة رسمياً كشركة استثمار رقمي في الولايات المتحدة - كاليفورنيا.</p>
+            <div style="margin-top:15px;">
+                <span class="badge-gold"><i class="fas fa-check-circle"></i> رقم السجل: SC-2024-CA-77421</span>
+                <span class="badge-gold"><i class="fas fa-check-circle"></i> تدقيق مالي سنوي</span>
+                <span class="badge-gold"><i class="fas fa-check-circle"></i> متوافق مع معايير AML</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="packages" class="section" style="background: #161A1E;">
+    <div class="container">
+        <h2 class="section-title">باقات <span>الاستثمار</span></h2>
+        <div class="pricing-grid">
+            <div class="pricing-card"><h3><i class="fas fa-seedling"></i> برونزية</h3><div class="price">10 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 2%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 56 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-medal"></i> فضية</h3><div class="price">50 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 5%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 700 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-gem"></i> ذهبية</h3><div class="price">200 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 10%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 5600 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-crown"></i> ماسية</h3><div class="price">1000 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 20%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 56000 USDT</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Global Warranty Certificates -->
+<section id="warranty" class="section" style="background:#0B0E11">
+    <div class="container">
+        <h2 class="section-title">شهادات <span>الضمان العالمية</span></h2>
+        <div class="warranty-grid">
+            <div class="warranty-card"><div class="warranty-icon"><i class="fas fa-shield-alt"></i></div><h3>ISO 27001:2024</h3><p>شهادة أمن المعلومات – معتمدة من الاتحاد الدولي للامتثال الرقمي.</p><span class="badge-gold">معتمد</span></div>
+            <div class="warranty-card"><div class="warranty-icon"><i class="fas fa-university"></i></div><h3>ترخيص DFPI كاليفورنيا</h3><p>هيئة الخدمات المالية – ترخيص رقم 2024-CL-8891.</p><span class="badge-gold">مرخص</span></div>
+            <div class="warranty-card"><div class="warranty-icon"><i class="fab fa-bitcoin"></i></div><h3>شريك Binance & Coinbase</h3><p>ضمان السيولة الفائقة والحماية من التلاعب.</p><span class="badge-gold">شراكة رسمية</span></div>
+            <div class="warranty-card"><div class="warranty-icon"><i class="fas fa-hand-holding-usd"></i></div><h3>ضمان رأس المال</h3><p>صندوق الطوارئ بنسبة 40% من إجمالي الأصول.</p><span class="badge-gold">ضمان معتمد</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- طرق الإيداع والسحب (محدثة) -->
+<section id="payment" class="section">
+    <div class="container">
+        <h2 class="section-title">طرق <span>الإيداع والسحب</span></h2>
+        <div class="payment-methods">
+            <i class="fas fa-exchange-alt" style="font-size: 48px; color: var(--primary); margin-bottom: 15px; display: inline-block;"></i>
+            <h3 style="margin-bottom: 12px;">الطرق المتاحة حالياً</h3>
+            <div class="payment-icons">
+                <div class="payment-item"><i class="fab fa-bitcoin"></i><span>USDT (TRC20) فقط</span></div>
+            </div>
+            <p style="margin-top: 25px; opacity: 0.8; font-size: 14px;"><i class="fas fa-info-circle"></i> سيتم إضافة طرق دفع محلية قريباً:</p>
+            <div class="payment-icons" style="margin-top: 10px;">
+                <div class="payment-item coming-soon"><i class="fas fa-university"></i><span>بنك الخرطوم</span><small>قريباً</small></div>
+                <div class="payment-item coming-soon"><i class="fas fa-mobile-alt"></i><span>فوري</span><small>قريباً</small></div>
+                <div class="payment-item coming-soon"><i class="fas fa-building"></i><span>بنك أمدرمان</span><small>قريباً</small></div>
+            </div>
+            <div class="badge-gold" style="margin-top: 25px; display: inline-block;"><i class="fas fa-money-bill-wave"></i> جميع عمليات السحب تتم عبر USDT TRC20 حتى إشعار آخر</div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section" style="background:#0B0E11">
+    <div class="container">
+        <h2 class="section-title">الأسئلة <span>الشائعة</span></h2>
+        <div class="faq-item"><div class="faq-question">ما هي المدة الاستثمارية؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>المدة 280 يوم لجميع الباقات مع أرباح يومية تتراوح بين 2% إلى 20% حسب الباقة.</p></div></div>
+        <div class="faq-item"><div class="faq-question">كيف يمكنني سحب الأرباح؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>السحب متاح عبر USDT TRC20 فقط حالياً. تتم المعالجة خلال 24 ساعة.</p></div></div>
+        <div class="faq-item"><div class="faq-question">هل الشركة مرخصة ومعتمدة؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>نعم، مسجلة رسمياً في كاليفورنيا برقم SC-2024-CA-77421 ولدينا شراكات مع كبرى منصات التداول.</p></div></div>
+        <div class="faq-item"><div class="faq-question">ماهي طرق الإيداع المتاحة حالياً؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>حالياً: USDT (TRC20) فقط. قريباً سيتم تفعيل بنك الخرطوم، فوري، وبنك أمدرمان.</p></div></div>
+    </div>
+</section>
+
+<!-- Latest News -->
+<section style="background:#0B0E11; padding:50px 0">
+    <div class="container">
+        <h2 class="section-title">آخر <span>الأخبار</span></h2>
+        <div class="grid-3">
+            <div class="news-card"><div class="news-img"><i class="fas fa-chart-line"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 15 أبريل 2026</div><h3>إطلاق الباقة الماسية</h3><p>أعلنت SudanCrypto عن إطلاق الباقة الماسية بربح يومي 20% لمدة 280 يوم.</p></div></div>
+            <div class="news-card"><div class="news-img"><i class="fas fa-shield-alt"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 1 أبريل 2026</div><h3>شراكة استراتيجية مع Binance</h3><p>تعزيز الأمان والسيولة من خلال شراكتنا مع منصة Binance العالمية.</p></div></div>
+            <div class="news-card"><div class="news-img"><i class="fas fa-users"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 20 مارس 2026</div><h3>تجاوزنا 10,000 مستثمر</h3><p>نحتفل بثقة أكثر من 10 آلاف مستثمر من حول العالم.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">تواصل <span>معنا</span></h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>البريد الإلكتروني</h4><p>support@sudancrypto.org</p></div></div>
+                <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><h4>واتساب</h4><p>+16727123329</p></div></div>
+                <div class="contact-item"><div class="contact-icon"><i class="fab fa-telegram"></i></div><div><h4>تيليجرام</h4><p>@crypto_sudanees</p></div></div>
+                <div class="contact-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><h4>إنستجرام</h4><p>sudan_crypto_@</p></div></div>
+                <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>العنوان</h4><p>California, United States</p></div></div>
+            </div>
+            <div class="contact-form">
+                <input type="text" placeholder="الاسم الكامل">
+                <input type="email" placeholder="البريد الإلكتروني">
+                <textarea rows="4" placeholder="رسالتك"></textarea>
+                <button class="btn-gold" style="width:100%">إرسال الرسالة <i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div><h3 style="color:var(--primary)">SudanCrypto LLC</h3><p>مستقبل الاستثمار الرقمي بين يديك</p><div class="social-links"><a href="#"><i class="fab fa-whatsapp"></i></a><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+            <div><h4>روابط سريعة</h4><p><a href="#about" style="color:#EAECEF; text-decoration:none">من نحن</a></p><p><a href="#packages" style="color:#EAECEF; text-decoration:none">الباقات</a></p><p><a href="#faq" style="color:#EAECEF; text-decoration:none">الأسئلة</a></p></div>
+            <div><h4>التراخيص</h4><p>رقم السجل: SC-2024-CA-77421</p><p>كاليفورنيا - الولايات المتحدة</p></div>
+        </div>
+        <div style="text-align:center; padding-top:25px; border-top:1px solid var(--border-color); font-size:13px"><p>© 2026 SudanCrypto LLC - جميع الحقوق محفوظة</p></div>
+    </div>
+</footer>
+
+<script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const item = q.parentElement;
+            item.classList.toggle('active');
+            const icon = q.querySelector('i');
+            icon.style.transform = item.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+        });
     });
-  }
-
-  const code = Math.floor(100000 + Math.random() * 900000);
-  codes[email] = code;
-
-  try {
-    await resend.emails.send({
-      from: "Sudan Crypto <noreply@sudancrypto.com>",
-      to: email,
-      subject: "كود التحقق",
-      html: `<h2>كود التحقق: ${code}</h2>`
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
     });
-
-    res.json({ success: true });
-
-  } catch (err) {
-    res.json({ success: false, message: "فشل الإرسال" });
-  }
-});
-
-// ================== تحقق من الكود ==================
-app.post("/verify", (req, res) => {
-  const { email, code } = req.body;
-
-  if (codes[email] == code) {
-    delete codes[email];
-    return res.json({ success: true });
-  }
-
-  res.json({ success: false });
-});
-
-// ================== تسجيل ==================
-app.post("/register", async (req, res) => {
-  const { name, email, phone, password, ref } = req.body;
-
-  if (!name || !email || !phone || !password) {
-    return res.json({ success: false, message: "املأ كل الحقول" });
-  }
-
-  if (password.length < 8) {
-    return res.json({ success: false, message: "كلمة السر ضعيفة" });
-  }
-
-  const exists = await User.findOne({ email });
-  if (exists) {
-    return res.json({ success: false, message: "الإيميل مستخدم" });
-  }
-
-  let refCode;
-  let existsCode = true;
-
-  while (existsCode) {
-    refCode = generateRefCode();
-    const userExists = await User.findOne({ refCode });
-    if (!userExists) existsCode = false;
-  }
-
-  let refUser = null;
-  if (ref) {
-    refUser = await User.findOne({ refCode: ref });
-  }
-
-  const user = new User({
-    name,
-    email,
-    phone,
-    password,
-    refCode: refCode,
-    refBy: refUser ? refUser.refCode : null
-  });
-
-  await user.save();
-
-  res.json({ success: true });
-});
-
-// ================== تسجيل دخول ==================
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email, password });
-
-  if (!user) {
-    return res.json({ success: false, message: "بيانات غلط" });
-  }
-
-  res.json({
-    success: true,
-    name: user.name,
-    email: user.email
-  });
-});
-
-// ================== نسيت كلمة السر ==================
-app.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
-
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.json({ success: false, message: "غير موجود" });
-  }
-
-  const code = Math.floor(100000 + Math.random() * 900000);
-  resetCodes[email] = code;
-
-  await resend.emails.send({
-    from: "Sudan Crypto <noreply@sudancrypto.com>",
-    to: email,
-    subject: "Reset Password",
-    html: `<h1>${code}</h1>`
-  });
-
-  res.json({ success: true });
-});
-
-// ================== تحقق reset ==================
-app.post("/verify-reset-code", (req, res) => {
-  const { email, code } = req.body;
-
-  if (resetCodes[email] == code) {
-    resetCodes[email + "_ok"] = true;
-    return res.json({ success: true });
-  }
-
-  res.json({ success: false });
-});
-
-// ================== تعيين كلمة جديدة ==================
-app.post("/reset-password", async (req, res) => {
-  const { email, newPassword } = req.body;
-
-  if (!resetCodes[email + "_ok"]) {
-    return res.json({ success: false });
-  }
-
-  await User.updateOne({ email }, { password: newPassword });
-
-  delete resetCodes[email];
-  delete resetCodes[email + "_ok"];
-
-  res.json({ success: true });
-});
-
-// ================== الصفحة الرئيسية ==================
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-// ================== جلب بيانات المستخدم ==================
-app.post("/user-data", async (req, res) => {
-  const { email } = req.body;
-
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    return res.json({ success: false });
-  }
-
-  if (!user.refCode) {
-    user.refCode = generateRefCode();
-    await user.save();
-  }
-
-  res.json({
-    success: true,
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    isVerified: user.isVerified || false,
-    verificationStatus: user.verificationStatus || 'none',
-    balance: user.balance || 0,
-    incomeBalance: user.incomeBalance || 0,
-    isBlocked: user.isBlocked || false,
-    isFrozen: user.isFrozen || false,
-    withdrawBlocked: user.withdrawBlocked || false,
-    packageName: user.packageName,
-    packageStart: user.packageStart,
-    packageDurationDays: user.packageDurationDays,
-    verificationRejectReason: user.verificationRejectReason || null,
-    refCode: user.refCode
-  });
-});
-
-// ================== تغيير كلمة المرور ==================
-app.post("/change-password", async (req, res) => {
-  const { email, oldPass, newPass } = req.body;
-  const user = await User.findOne({ email, password: oldPass });
-  
-  if (!user) {
-    return res.json({ success: false, message: "كلمة المرور الحالية غير صحيحة" });
-  }
-
-  await User.updateOne({ email }, { password: newPass });
-  res.json({ success: true });
-});
-
-// ================== تعيين كلمة السحب ==================
-app.post("/set-withdraw-password", async (req, res) => {
-  const { email, withdrawPassword } = req.body;
-  await User.updateOne({ email }, { withdrawPassword });
-  res.json({ success: true });
-});
-
-// ============================================
-// 👤 الأدمن - المستخدمين
-// ============================================
-app.get("/admin-users", async (req, res) => {
-  const users = await User.find({});
-  res.json({ success: true, users });
-});
-
-// ✅ توثيق
-app.post("/admin-verify", async (req, res) => {
-  const { email } = req.body;
-  await User.updateOne({ email }, { isVerified: true, verificationStatus: "verified" });
-  res.json({ success: true });
-});
-
-// 📄 عرض التوثيق
-app.get("/admin-verifications", async (req, res) => {
-  const users = await User.find({
-    verificationStatus: "pending"
-  });
-
-  res.json({ success: true, requests: users }); // 🔥 بدل users → requests
-});
-
-// ❌ رفض التوثيق
-app.post("/admin-reject-verification", async (req, res) => {
-  const { email, reason } = req.body;
-
-  await User.updateOne(
-    { email },
-    {
-      verificationStatus: "rejected",
-      isVerified: false,
-      verificationRejectReason: reason || "تم رفض التوثيق"
-    }
-  );
-
-  res.json({ success: true });
-});
-
-// ❄️ تجميد
-app.post("/admin-freeze", async (req, res) => {
-  const { email } = req.body;
-  await User.updateOne({ email }, { isFrozen: true });
-  res.json({ success: true });
-});
-
-// ================== عرض الإيداعات للأدمن ==================
-app.get("/admin-deposits", async (req, res) => {
-  try {
-    const deposits = await Deposit.find().sort({ createdAt: -1 });
-    res.json({ success: true, deposits });
-  } catch (err) {
-    res.json({ success: false });
-  }
-});
-
-// ================== قبول الإيداع ==================
-app.post("/admin-approve-deposit", async (req, res) => {
-  const { id } = req.body;
-
-  const deposit = await Deposit.findById(id);
-  if (!deposit) return res.json({ success: false });
-
-  // ✔️ تحديث الحالة
-  deposit.status = "approved";
-  await deposit.save();
-
-  // ✔️ جيب المستخدم
-  const user = await User.findOne({ email: deposit.email });
-  if (!user) return res.json({ success: false });
-
-  // ✔️ أضف الرصيد للمستخدم
-  user.balance += Number(deposit.amount);
-  await user.save();
-
-  // 🔥 العمولات (الإحالات)
-  const percentages = [0.10, 0.08, 0.06, 0.04, 0.02];
-
-  let currentRef = user.refBy;
-
-  for (let i = 0; i < 5; i++) {
-    if (!currentRef) break;
-
-    const refUser = await User.findOne({ refCode: currentRef });
-    if (!refUser) break;
-
-    const profit = deposit.amount * percentages[i];
-
-    refUser.incomeBalance += profit;
-    await refUser.save();
-
-    currentRef = refUser.refBy;
-  }
-
-  res.json({ success: true });
-});
-
-// 🚫 حظر
-app.post("/admin-block", async (req, res) => {
-  const { email } = req.body;
-  await User.updateOne({ email }, { isBlocked: true });
-  res.json({ success: true });
-});
-
-// 🔓 فك الحظر
-app.post("/admin-unblock", async (req, res) => {
-  const { email } = req.body;
-  await User.updateOne({ email }, { isBlocked: false, isFrozen: false });
-  res.json({ success: true });
-});
-
-// ❌ حذف مستخدم
-app.post("/admin-delete", async (req, res) => {
-  const { email } = req.body;
-  await User.deleteOne({ email });
-  res.json({ success: true });
-});
-
-// ➕ إضافة رصيد
-app.post("/admin-add-balance", async (req, res) => {
-  const { email, amount } = req.body;
-
-  await User.updateOne(
-    { email },
-    { $inc: { balance: Number(amount) } }
-  );
-
-  res.json({ success: true });
-});
-
-// ❌ رفض الإيداع
-app.post("/admin-reject-deposit", async (req, res) => {
-  const { id } = req.body;
-
-  const deposit = await Deposit.findById(id);
-  if (!deposit) return res.json({ success: false });
-
-  deposit.status = "rejected";
-  await deposit.save();
-
-  res.json({ success: true });
-});
-
-// 💸 السحب
-app.post("/withdraw-request", async (req, res) => {
-  const { email, amount } = req.body;
-
-  const user = await User.findOne({ email });
-
-  if (!user) return res.json({ success: false });
-
-  if (user.withdrawBlocked) {
-    return res.json({ success: false, message: "السحب موقوف" });
-  }
-
-  if (amount > user.balance) {
-    return res.json({ success: false, message: "رصيد غير كافي" });
-  }
-
-  withdrawRequests.push({
-    id: Date.now(),
-    email,
-    amount,
-    status: "pending"
-  });
-
-  res.json({ success: true });
-});
-
-// عرض السحب
-app.get("/admin-withdraws", (req, res) => {
-  res.json({ success: true, requests: withdrawRequests });
-});
-
-// قبول السحب
-app.post("/admin-approve-withdraw", async (req, res) => {
-  const { id } = req.body;
-  const request = withdrawRequests.find(r => r.id == id);
-  if (!request) return res.json({ success: false });
-
-  const user = await User.findOne({ email: request.email });
-  if (!user) return res.json({ success: false });
-
-  user.balance -= Number(request.amount);
-  await user.save();
-
-  request.status = "approved";
-  res.json({ success: true });
-});
-
-// رفض السحب
-app.post("/admin-reject-withdraw", (req, res) => {
-  const { id } = req.body;
-  const request = withdrawRequests.find(r => r.id == id);
-  if (!request) return res.json({ success: false });
-
-  request.status = "rejected";
-  res.json({ success: true });
-});
-
-// ================== رفع التوثيق ==================
-app.post("/submit-verification", upload.array("images"), async (req, res) => {
-  try {
-    const { email, fullName, docType, docNumber } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.json({ success: false, message: "المستخدم غير موجود" });
-    }
-
-    // ❌ منع التكرار
-    if (user.verificationStatus === "pending") {
-      return res.json({ success: false, message: "طلبك قيد المراجعة" });
-    }
-
-    if (user.verificationStatus === "verified") {
-      return res.json({ success: false, message: "حسابك موثق بالفعل" });
-    }
-
-    if (!req.files || req.files.length === 0) {
-      return res.json({ success: false, message: "ارفع الصور" });
-    }
-
-    const images = req.files.map(file => "/uploads/" + file.filename);
-
-    await User.updateOne(
-      { email },
-      {
-        verificationFullName: fullName,
-        verificationDocType: docType,
-        verificationDocNumber: docNumber,
-        verificationImages: images,
-        verificationStatus: "pending",
-        verificationRejectReason: null // 🔥 يمسح السبب القديم
-      }
-    );
-
-    res.json({ success: true });
-
-  } catch (err) {
-    console.log(err);
-    res.json({ success: false });
-  }
-});
-
-// ================== NowPayments Webhook ==================
-app.post("/nowpayments-webhook", async (req, res) => {
-  try {
-    const ipnSecret = "vbk9TcEg/bvftZWi+O6H2m+DWCBKtosc";
-
-    const hmac = crypto.createHmac("sha512", ipnSecret);
-    hmac.update(JSON.stringify(req.body));
-    const signature = hmac.digest("hex");
-
-    if (signature !== req.headers["x-nowpayments-sig"]) {
-      console.log("❌ Invalid signature");
-      return res.status(400).send("Invalid signature");
-    }
-
-    const payment = req.body;
-    console.log("🔥 Payment received:", payment);
-
-    const parsed = JSON.parse(payment.order_description);
-
-    // 🔥 أنشئ العملية لو ما موجودة
-    let deposit = await Deposit.findOne({ orderId: payment.order_id });
-
-    if (!deposit) {
-      deposit = new Deposit({
-        email: parsed.email,
-        name: "auto",
-        amount: payment.price_amount,
-        txid: payment.payin_hash,
-        image: null,
-        orderId: payment.order_id,
-        packageName: parsed.packageName,
-        network: payment.pay_currency,
-        status: "pending"
-      });
-
-      await deposit.save();
-    }
-
-    // 🔥 تحديث الحالة
-    deposit.status = payment.payment_status === "finished" ? "approved" : "pending";
-    await deposit.save();
-
-    if (payment.payment_status === "finished" || payment.payment_status === "confirmed") {
-      const parsed = JSON.parse(payment.order_description);
-
-      const user = await User.findOne({ email: parsed.email });
-
-      if (!user) return res.sendStatus(200);
-
-      const percentages = [0.10, 0.08, 0.06, 0.04, 0.02];
-
-      let currentRef = user.refBy;
-
-      for (let i = 0; i < 5; i++) {
-        if (!currentRef) break;
-
-        const refUser = await User.findOne({ refCode: currentRef });
-
-        if (!refUser) break;
-
-        const profit = payment.price_amount * percentages[i];
-
-        refUser.incomeBalance += profit;
-        await refUser.save();
-
-        // نطلع للمستوى الأعلى
-        currentRef = refUser.refBy;
-      }
-
-      // 🔥 تفعيل الباقة
-      user.packageName = parsed.packageName;
-      user.packageStart = new Date();
-
-      // 🔥 مدة الباقة
-      const packages = {
-        gold: 280,
-        silver: 180,
-        vip: 365
-      };
-
-      user.packageDurationDays = packages[parsed.packageName] || 0;
-
-      // 🔥 إضافة الرصيد
-      user.balance += Number(payment.price_amount);
-
-      await user.save();
-
-      console.log("🔥 تم التفعيل");
-    }
-
-    res.sendStatus(200);
-
-  } catch (err) {
-    console.log("❌ Webhook error:", err);
-    res.sendStatus(500);
-  }
-});
-
-// ================== CREATE PAYMENT ==================
-app.post("/create-payment", async (req, res) => {
-  const { amount, email, packageName } = req.body;
-
-  try {
-    const orderId = Date.now().toString();
-
-    const response = await fetch("https://api.nowpayments.io/v1/invoice", {
-      method: "POST",
-      headers: {
-        "x-api-key": "ZYE715R-H144D4D-QB66MAZ-XK8YVGP",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        price_amount: Number(amount),
-        price_currency: "usd",
-        pay_currency: "usdttrc20",
-        order_id: orderId,
-
-        order_description: JSON.stringify({
-          email: email,
-          packageName: packageName
-        })
-      })
+    // Smooth scroll + close mobile menu
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) target.scrollIntoView({behavior:'smooth'});
+            if(navLinks.classList.contains('show')) navLinks.classList.remove('show');
+        });
     });
-
-    const data = await response.json();
-
-    // 🔥 أهم خطوة (تسجيل العملية فوراً)
-    const deposit = new Deposit({
-      email,
-      name: "auto",
-      amount: Number(amount),
-      txid: null,
-      image: null,
-      orderId: orderId,
-      packageName: packageName,
-      network: "USDT",
-      status: "pending"
-    });
-
-    await deposit.save();
-
-    res.json({
-      success: true,
-      invoice_url: data.invoice_url
-    });
-
-  } catch (err) {
-    console.log(err);
-    res.json({ success: false });
-  }
-});
-
-// ⏱ نظام انتهاء الوقت (تحويل العمليات المعلقة القديمة إلى expired)
-setInterval(async () => {
-  try {
-    const expiredTime = new Date(Date.now() - 20 * 60 * 1000);
-    await Deposit.updateMany(
-      {
-        status: "pending",
-        createdAt: { $lt: expiredTime }
-      },
-      { status: "expired" }
-    );
-  } catch (err) {
-    console.log("Expiration check error:", err);
-  }
-}, 60000);
-
-app.get("/transactions/:email", async (req, res) => {
-  const email = req.params.email;
-
-  try {
-    const deposits = await Deposit.find({ email });
-    
-    const withdraws = withdrawRequests.filter(w => w.email === email);
-
-    // ندمجهم
-    const all = [
-      ...deposits.map(d => ({
-        type: "deposit",
-        amount: d.amount,
-        status: d.status,
-        date: d.createdAt,
-        txid: d.txid,
-        network: d.network
-      })),
-      ...withdraws.map(w => ({
-        type: "withdraw",
-        amount: w.amount,
-        status: w.status,
-        date: new Date(w.id)
-      }))
-    ];
-
-    // ترتيب حسب الأحدث
-    all.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    res.json({ success: true, data: all });
-
-  } catch (err) {
-    res.json({ success: false });
-  }
-});
-
-// ================== الإحالات ==================
-app.get("/referrals/:email", async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.params.email });
-    if (!user) return res.json({ success: false });
-
-    // 🧠 نجيب كل المستويات
-    const level1 = await User.find({ refBy: user.refCode });
-    const level2 = await User.find({ refBy: { $in: level1.map(u => u.refCode) } });
-    const level3 = await User.find({ refBy: { $in: level2.map(u => u.refCode) } });
-    const level4 = await User.find({ refBy: { $in: level3.map(u => u.refCode) } });
-    const level5 = await User.find({ refBy: { $in: level4.map(u => u.refCode) } });
-
-    res.json({
-      success: true,
-      refCode: user.refCode,
-      income: user.incomeBalance,
-      levels: {
-        level1,
-        level2,
-        level3,
-        level4,
-        level5
-      }
-    });
-
-  } catch (err) {
-    res.json({ success: false });
-  }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+</script>
+</body>
+</html>
