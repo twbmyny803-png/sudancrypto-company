@@ -16,13 +16,12 @@
 }
 body {
     font-family: 'Cairo', sans-serif;
-    background: #0B0E11; /* لون خلفية مثل Binance */
+    background: #0B0E11;
     color: #EAECEF;
     line-height: 1.5;
     overflow-x: hidden;
     width: 100%;
 }
-/* ألوان Binance: الذهبي المائل للأصفر #F0B90B */
 :root {
     --primary: #F0B90B;
     --primary-dark: #d6a405;
@@ -155,11 +154,11 @@ body {
 }
 
 /* Pricing */
-.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
 .pricing-card {
     background: var(--card-bg);
     border-radius: 24px;
-    padding: 28px 15px;
+    padding: 28px 12px;
     text-align: center;
     transition: 0.3s;
     border: 1px solid var(--border-color);
@@ -213,7 +212,7 @@ body {
 .news-date { color: var(--primary); font-size: 12px; margin-bottom: 8px; }
 .news-content h3 { font-size: 18px; margin-bottom: 8px; }
 
-/* Payment Methods (محدث) */
+/* Payment Methods */
 .payment-methods {
     background: var(--card-bg);
     border-radius: 28px;
@@ -259,20 +258,11 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
 .social-links a { display: inline-block; margin-left: 15px; color: #EAECEF; font-size: 22px; transition: 0.3s; }
 .social-links a:hover { color: var(--primary); }
 
-/* ========== RESPONSIVE جوال ممتاز ========== */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-    .container {
-        padding: 0 16px;
-    }
-    .navbar {
-        padding: 12px 0;
-    }
-    .logo h2 {
-        font-size: 20px;
-    }
-    .logo p {
-        font-size: 8px;
-    }
+    .container { padding: 0 16px; }
+    .navbar { padding: 12px 0; }
+    .logo h2 { font-size: 20px; }
     .nav-links {
         display: none;
         flex-direction: column;
@@ -285,58 +275,13 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
         text-align: center;
         border: 1px solid var(--border-color);
     }
-    .nav-links.show {
-        display: flex;
-    }
-    .menu-icon {
-        display: block;
-    }
-    .hero {
-        padding-top: 90px;
-        padding-bottom: 40px;
-        min-height: auto;
-    }
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        text-align: center;
-    }
-    .hero h1 {
-        font-size: 30px;
-    }
-    .hero p {
-        font-size: 14px;
-    }
-    .hero-stats {
-        justify-content: center;
-        gap: 20px;
-    }
-    .stat h3 {
-        font-size: 24px;
-    }
-    .hero-content div:last-child i {
-        font-size: 110px !important;
-    }
-    .section {
-        padding: 45px 0;
-    }
-    .section-title {
-        font-size: 26px;
-        margin-bottom: 30px;
-    }
-    .card, .pricing-card, .warranty-card, .legal-cert {
-        padding: 20px 15px;
-    }
-    .card h3 {
-        font-size: 20px;
-    }
-    .price {
-        font-size: 28px;
-    }
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
+    .nav-links.show { display: flex; }
+    .menu-icon { display: block; }
+    .hero { padding-top: 90px; padding-bottom: 40px; min-height: auto; }
+    .hero-content { grid-template-columns: 1fr; gap: 25px; text-align: center; }
+    .hero h1 { font-size: 30px; }
+    .hero-stats { justify-content: center; gap: 20px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 25px; }
 }
 </style>
 </head>
@@ -405,10 +350,11 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
     <div class="container">
         <h2 class="section-title">باقات <span>الاستثمار</span></h2>
         <div class="pricing-grid">
-            <div class="pricing-card"><h3><i class="fas fa-seedling"></i> برونزية</h3><div class="price">10 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 2%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 56 USDT</p></div>
-            <div class="pricing-card"><h3><i class="fas fa-medal"></i> فضية</h3><div class="price">50 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 5%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 700 USDT</p></div>
-            <div class="pricing-card"><h3><i class="fas fa-gem"></i> ذهبية</h3><div class="price">200 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 10%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 5600 USDT</p></div>
-            <div class="pricing-card"><h3><i class="fas fa-crown"></i> ماسية</h3><div class="price">1000 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 20%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 56000 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-seedling"></i> برونزية</h3><div class="price">50 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 2%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 280 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-medal"></i> فضية</h3><div class="price">100 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 6%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 1680 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-gem"></i> ذهبية</h3><div class="price">250 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 10%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 7000 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-crown"></i> بلاتينية</h3><div class="price">500 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 15%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 21000 USDT</p></div>
+            <div class="pricing-card"><h3><i class="fas fa-star"></i> ماسية</h3><div class="price">1000 USDT</div><div class="daily-profit"><i class="fas fa-money-bill-wave"></i> ربح يومي 20%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 56000 USDT</p></div>
         </div>
     </div>
 </section>
@@ -426,7 +372,7 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
     </div>
 </section>
 
-<!-- طرق الإيداع والسحب (محدثة) -->
+<!-- طرق الإيداع والسحب -->
 <section id="payment" class="section">
     <div class="container">
         <h2 class="section-title">طرق <span>الإيداع والسحب</span></h2>
@@ -476,17 +422,18 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
         <h2 class="section-title">تواصل <span>معنا</span></h2>
         <div class="contact-grid">
             <div class="contact-info">
-                <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>البريد الإلكتروني</h4><p>support@sudancrypto.org</p></div></div>
-                <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><h4>واتساب</h4><p>+16727123329</p></div></div>
-                <div class="contact-item"><div class="contact-icon"><i class="fab fa-telegram"></i></div><div><h4>تيليجرام</h4><p>@crypto_sudanees</p></div></div>
-                <div class="contact-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><h4>إنستجرام</h4><p>sudan_crypto_@</p></div></div>
+                <a href="mailto:support@sudancrypto.org" style="text-decoration: none; color: inherit;"><div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>البريد الإلكتروني</h4><p>support@sudancrypto.org</p></div></div></a>
+                <a href="https://wa.me/16727123329" target="_blank" style="text-decoration: none; color: inherit;"><div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><h4>واتساب</h4><p>+16727123329</p></div></div></a>
+                <a href="https://t.me/crypto_sudanees" target="_blank" style="text-decoration: none; color: inherit;"><div class="contact-item"><div class="contact-icon"><i class="fab fa-telegram"></i></div><div><h4>تيليجرام</h4><p>@crypto_sudanees</p></div></div></a>
+                <a href="https://instagram.com/sudan_crypto_" target="_blank" style="text-decoration: none; color: inherit;"><div class="contact-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><h4>إنستجرام</h4><p>sudan_crypto_</p></div></div></a>
                 <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>العنوان</h4><p>California, United States</p></div></div>
             </div>
             <div class="contact-form">
-                <input type="text" placeholder="الاسم الكامل">
-                <input type="email" placeholder="البريد الإلكتروني">
-                <textarea rows="4" placeholder="رسالتك"></textarea>
-                <button class="btn-gold" style="width:100%">إرسال الرسالة <i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="contactName" placeholder="الاسم الكامل">
+                <input type="email" id="contactEmail" placeholder="البريد الإلكتروني">
+                <textarea id="contactMsg" rows="4" placeholder="رسالتك"></textarea>
+                <button class="btn-gold" id="sendMessageBtn" style="width:100%">إرسال الرسالة <i class="fas fa-paper-plane"></i></button>
+                <p style="font-size: 12px; margin-top: 10px; opacity: 0.7;"><i class="fas fa-info-circle"></i> سوف يتم الرد عبر البريد الإلكتروني</p>
             </div>
         </div>
     </div>
@@ -495,7 +442,7 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
 <footer>
     <div class="container">
         <div class="footer-grid">
-            <div><h3 style="color:var(--primary)">SudanCrypto LLC</h3><p>مستقبل الاستثمار الرقمي بين يديك</p><div class="social-links"><a href="#"><i class="fab fa-whatsapp"></i></a><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+            <div><h3 style="color:var(--primary)">SudanCrypto LLC</h3><p>مستقبل الاستثمار الرقمي بين يديك</p><div class="social-links"><a href="https://wa.me/16727123329" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="https://t.me/crypto_sudanees" target="_blank"><i class="fab fa-telegram"></i></a><a href="https://instagram.com/sudan_crypto_" target="_blank"><i class="fab fa-instagram"></i></a></div></div>
             <div><h4>روابط سريعة</h4><p><a href="#about" style="color:#EAECEF; text-decoration:none">من نحن</a></p><p><a href="#packages" style="color:#EAECEF; text-decoration:none">الباقات</a></p><p><a href="#faq" style="color:#EAECEF; text-decoration:none">الأسئلة</a></p></div>
             <div><h4>التراخيص</h4><p>رقم السجل: SC-2024-CA-77421</p><p>كاليفورنيا - الولايات المتحدة</p></div>
         </div>
@@ -527,6 +474,37 @@ footer { background: #030405; padding: 50px 0 25px; margin-top: 50px; border-top
             if(target) target.scrollIntoView({behavior:'smooth'});
             if(navLinks.classList.contains('show')) navLinks.classList.remove('show');
         });
+    });
+
+    // Send Message via Email (mailto)
+    document.getElementById('sendMessageBtn').addEventListener('click', function() {
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const msg = document.getElementById('contactMsg').value.trim();
+
+        if (!name || !email || !msg) {
+            alert('الرجاء تعبئة جميع الحقول: الاسم، البريد الإلكتروني، والرسالة.');
+            return;
+        }
+
+        const subject = encodeURIComponent('رسالة جديدة من ' + name + ' - SudanCrypto');
+        const body = encodeURIComponent(
+            'الاسم: ' + name + '\n' +
+            'البريد الإلكتروني: ' + email + '\n\n' +
+            'الرسالة:\n' + msg + '\n\n' +
+            '---\n' +
+            'تم الإرسال عبر نموذج التواصل في موقع SudanCrypto.\n' +
+            'سوف يتم الرد عبر البريد الإلكتروني.'
+        );
+
+        window.location.href = 'mailto:support@sudancrypto.org?subject=' + subject + '&body=' + body;
+
+        // Clear fields after a short delay (optional)
+        setTimeout(() => {
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMsg').value = '';
+        }, 200);
     });
 </script>
 </body>
