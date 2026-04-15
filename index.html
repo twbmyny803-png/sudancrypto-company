@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>SudanCrypto LLC | مستقبل الاستثمار الرقمي</title>
-<!-- Font Awesome 6 (أيقونات برمجية حقيقية) -->
+<title>SudanCrypto LLC | الاستثمار الرقمي الموثوق</title>
+<!-- Font Awesome 6 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<!-- Google Font - Cairo Professional -->
+<!-- Google Font Cairo -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- AOS Library for scroll animations (خفيف واحترافي) -->
+<!-- AOS Scroll -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <style>
 * {
@@ -33,7 +33,7 @@ body {
     padding: 0 25px;
 }
 
-/* ========== NAVBAR ========== */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -43,7 +43,6 @@ body {
     z-index: 1000;
     padding: 18px 0;
     border-bottom: 1px solid rgba(250, 204, 21, 0.2);
-    transition: 0.3s;
 }
 .navbar .container {
     display: flex;
@@ -59,7 +58,6 @@ body {
 .logo p {
     font-size: 11px;
     opacity: 0.7;
-    letter-spacing: 1px;
 }
 .nav-links {
     display: flex;
@@ -73,40 +71,17 @@ body {
     transition: 0.3s;
     font-size: 16px;
 }
-.nav-links a:hover {
-    color: #facc15;
-}
-.nav-links a i {
-    margin-left: 6px;
-}
-/* Mobile menu icon (hidden on desktop) */
-.menu-icon {
-    display: none;
-    font-size: 28px;
-    color: #facc15;
-    cursor: pointer;
-}
+.nav-links a:hover, .nav-links a.active { color: #facc15; }
+.nav-links a i { margin-left: 6px; }
+.menu-icon { display: none; font-size: 28px; color: #facc15; cursor: pointer; }
 
-/* ========== HERO SECTION ========== */
+/* Hero */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     background: radial-gradient(circle at 10% 20%, #0f172a, #020617);
     padding-top: 90px;
-    position: relative;
-    overflow: hidden;
-}
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: #facc15;
-    filter: blur(120px);
-    opacity: 0.1;
-    bottom: -100px;
-    left: -100px;
 }
 .hero-content {
     display: grid;
@@ -114,20 +89,9 @@ body {
     gap: 50px;
     align-items: center;
 }
-.hero h1 {
-    font-size: 55px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-.hero h1 span {
-    color: #facc15;
-}
-.hero p {
-    font-size: 18px;
-    opacity: 0.85;
-    margin-bottom: 30px;
-}
+.hero h1 { font-size: 55px; font-weight: 800; margin-bottom: 20px; }
+.hero h1 span { color: #facc15; }
+.hero p { font-size: 18px; opacity: 0.85; margin-bottom: 30px; }
 .btn-gold {
     background: #facc15;
     color: #000;
@@ -137,48 +101,19 @@ body {
     text-decoration: none;
     display: inline-block;
     transition: 0.3s;
-    font-size: 16px;
     border: none;
     cursor: pointer;
 }
-.btn-gold:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(250,204,21,0.3);
-}
-.hero-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 40px;
-}
-.stat h3 {
-    font-size: 28px;
-    color: #facc15;
-}
-.stat p {
-    font-size: 14px;
-    opacity: 0.7;
-}
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(250,204,21,0.3); }
+.hero-stats { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+.stat h3 { font-size: 32px; color: #facc15; }
+.stat p { font-size: 14px; opacity: 0.7; }
 
-/* ========== SECTIONS GLOBAL ========== */
-.section {
-    padding: 100px 0;
-}
-.section-title {
-    text-align: center;
-    font-size: 42px;
-    margin-bottom: 55px;
-    font-weight: 700;
-}
-.section-title span {
-    color: #facc15;
-    border-bottom: 3px solid #facc15;
-    padding-bottom: 5px;
-}
-.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-}
+/* Sections */
+.section { padding: 100px 0; }
+.section-title { text-align: center; font-size: 42px; margin-bottom: 55px; font-weight: 700; }
+.section-title span { color: #facc15; border-bottom: 3px solid #facc15; padding-bottom: 5px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
 .card {
     background: #111827;
     border-radius: 24px;
@@ -186,18 +121,10 @@ body {
     transition: 0.3s;
     border: 1px solid rgba(250,204,21,0.1);
 }
-.card:hover {
-    transform: translateY(-8px);
-    border-color: #facc15;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.5);
-}
-.card-icon {
-    font-size: 50px;
-    color: #facc15;
-    margin-bottom: 20px;
-}
+.card:hover { transform: translateY(-8px); border-color: #facc15; }
+.card-icon { font-size: 50px; color: #facc15; margin-bottom: 20px; }
 
-/* ========== LEGAL / CERTIFICATE CARD ========== */
+/* Legal certificate */
 .legal-cert {
     background: linear-gradient(145deg, #0f172a, #0a0f1c);
     border-radius: 40px;
@@ -206,28 +133,19 @@ body {
     border: 1px solid rgba(250,204,21,0.3);
     margin: 40px 0;
 }
-.legal-cert i {
-    font-size: 70px;
-    color: #facc15;
-    margin-bottom: 20px;
-}
+.legal-cert i { font-size: 70px; color: #facc15; margin-bottom: 20px; }
 .badge-gold {
     background: rgba(250,204,21,0.15);
     padding: 8px 20px;
     border-radius: 40px;
     color: #facc15;
     font-size: 14px;
-    font-weight: 500;
     display: inline-block;
     margin: 5px;
 }
 
-/* ========== PRICING ========== */
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
-}
+/* Pricing */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
 .pricing-card {
     background: #111827;
     border-radius: 28px;
@@ -236,57 +154,25 @@ body {
     transition: 0.3s;
     border: 1px solid rgba(250,204,21,0.1);
 }
-.pricing-card:hover {
-    transform: translateY(-10px);
-    border-color: #facc15;
-}
-.pricing-card h3 {
-    font-size: 26px;
-    margin-bottom: 15px;
-}
-.price {
-    font-size: 38px;
-    font-weight: 800;
-    color: #facc15;
-    margin: 20px 0;
-}
-.daily-profit {
-    background: rgba(250,204,21,0.15);
-    padding: 10px;
-    border-radius: 50px;
-    color: #facc15;
-    font-weight: bold;
-    margin: 15px 0;
-}
-.duration {
-    opacity: 0.7;
-    font-size: 14px;
-}
+.pricing-card:hover { transform: translateY(-10px); border-color: #facc15; }
+.price { font-size: 38px; font-weight: 800; color: #facc15; margin: 20px 0; }
+.daily-profit { background: rgba(250,204,21,0.15); padding: 10px; border-radius: 50px; color: #facc15; font-weight: bold; margin: 15px 0; }
 
-/* ========== TESTIMONIALS ========== */
-.testimonial-card {
-    background: #111827;
+/* Global Warranty Certificates (شهادات ضمان عالمية) */
+.warranty-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; }
+.warranty-card {
+    background: #0f172a;
     border-radius: 28px;
-    padding: 35px;
-    border: 1px solid rgba(250,204,21,0.1);
+    padding: 35px 25px;
+    text-align: center;
+    border: 1px solid rgba(250,204,21,0.2);
+    transition: 0.3s;
 }
-.testimonial-text {
-    font-style: italic;
-    margin-bottom: 25px;
-    font-size: 16px;
-    line-height: 1.7;
-}
-.testimonial-user {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.testimonial-user i {
-    font-size: 55px;
-    color: #facc15;
-}
+.warranty-card:hover { transform: translateY(-5px); border-color: #facc15; }
+.warranty-icon { font-size: 55px; color: #facc15; margin-bottom: 20px; }
+.warranty-card h3 { font-size: 24px; margin-bottom: 10px; }
 
-/* ========== FAQ (ACCORDION) ========== */
+/* FAQ */
 .faq-item {
     background: #111827;
     border-radius: 20px;
@@ -302,134 +188,47 @@ body {
     font-weight: 600;
     font-size: 18px;
 }
-.faq-question i {
-    color: #facc15;
-    transition: 0.3s;
-}
-.faq-answer {
-    padding: 0 28px;
-    max-height: 0;
-    overflow: hidden;
-    transition: 0.4s ease;
-    color: #ccc;
-}
-.faq-item.active .faq-answer {
-    padding: 0 28px 25px;
-    max-height: 350px;
-}
+.faq-question i { color: #facc15; transition: 0.3s; }
+.faq-answer { padding: 0 28px; max-height: 0; overflow: hidden; transition: 0.4s ease; color: #ccc; }
+.faq-item.active .faq-answer { padding: 0 28px 25px; max-height: 350px; }
 
-/* ========== NEWS ========== */
+/* News */
 .news-card {
     background: #111827;
     border-radius: 24px;
     overflow: hidden;
 }
-.news-img {
-    height: 180px;
-    background: linear-gradient(135deg, #facc15, #b8860b);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 55px;
-}
-.news-content {
-    padding: 25px;
-}
-.news-date {
-    color: #facc15;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
+.news-img { height: 180px; background: linear-gradient(135deg, #facc15, #b8860b); display: flex; align-items: center; justify-content: center; font-size: 55px; }
+.news-content { padding: 25px; }
+.news-date { color: #facc15; font-size: 13px; margin-bottom: 12px; }
 
-/* ========== CONTACT ========== */
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-}
-.contact-info {
-    background: #111827;
-    border-radius: 28px;
-    padding: 40px;
-}
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 30px;
-}
-.contact-icon {
-    width: 55px;
-    height: 55px;
-    background: rgba(250,204,21,0.15);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #facc15;
-    font-size: 24px;
-}
-.contact-form input, .contact-form textarea {
-    width: 100%;
-    padding: 16px;
-    margin-bottom: 18px;
-    background: #0f172a;
-    border: 1px solid rgba(250,204,21,0.2);
-    border-radius: 16px;
-    color: #fff;
-    font-family: inherit;
-}
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+.contact-info { background: #111827; border-radius: 28px; padding: 40px; }
+.contact-item { display: flex; align-items: center; gap: 18px; margin-bottom: 30px; }
+.contact-icon { width: 55px; height: 55px; background: rgba(250,204,21,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #facc15; font-size: 24px; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 16px; margin-bottom: 18px; background: #0f172a; border: 1px solid rgba(250,204,21,0.2); border-radius: 16px; color: #fff; font-family: inherit; }
 
-/* ========== FOOTER ========== */
-footer {
-    background: #020617;
-    padding: 70px 0 30px;
-    margin-top: 60px;
-}
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 40px;
-    margin-bottom: 45px;
-}
-.social-links a {
-    display: inline-block;
-    margin-left: 18px;
-    color: #fff;
-    font-size: 24px;
-    transition: 0.3s;
-}
-.social-links a:hover {
-    color: #facc15;
-}
+/* Footer */
+footer { background: #020617; padding: 70px 0 30px; margin-top: 60px; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; margin-bottom: 45px; }
+.social-links a { display: inline-block; margin-left: 18px; color: #fff; font-size: 24px; transition: 0.3s; }
+.social-links a:hover { color: #facc15; }
 
-/* ========== RESPONSIVE ========== */
+/* Responsive */
 @media (max-width: 950px) {
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    .hero-stats {
-        justify-content: center;
-    }
-    .nav-links {
-        display: none;
-    }
-    .menu-icon {
-        display: block;
-    }
-    .section-title {
-        font-size: 32px;
-    }
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-stats { justify-content: center; }
+    .nav-links { display: none; flex-direction: column; width: 100%; background: #0a0f1c; padding: 20px; border-radius: 20px; margin-top: 15px; gap: 15px; }
+    .nav-links.show { display: flex; }
+    .menu-icon { display: block; }
+    .section-title { font-size: 32px; }
+    .contact-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div class="container">
         <div class="logo">
@@ -440,16 +239,16 @@ footer {
             <a href="#home"><i class="fas fa-home"></i> الرئيسية</a>
             <a href="#about"><i class="fas fa-building"></i> من نحن</a>
             <a href="#packages"><i class="fas fa-coins"></i> الباقات</a>
-            <a href="#testimonials"><i class="fas fa-star"></i> شهادات</a>
+            <a href="#warranty"><i class="fas fa-shield-alt"></i> شهادات الضمان</a>
             <a href="#faq"><i class="fas fa-question-circle"></i> أسئلة</a>
             <a href="#contact"><i class="fas fa-envelope"></i> تواصل</a>
-            <a href="legal.html" target="_blank"><i class="fas fa-file-contract"></i> الوثائق</a>
+            <a href="legal.html"><i class="fas fa-file-contract"></i> الوثائق</a>
         </div>
         <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
     </div>
 </nav>
 
-<!-- HERO -->
+<!-- Hero -->
 <section id="home" class="hero">
     <div class="container">
         <div class="hero-content">
@@ -458,7 +257,7 @@ footer {
                 <p>مع SudanCrypto LLC، استثمر بثقة واستفد من أرباح يومية مضمونة. شركة مسجلة رسمياً في كاليفورنيا - الولايات المتحدة.</p>
                 <a href="#packages" class="btn-gold">استكشف الباقات <i class="fas fa-arrow-left"></i></a>
                 <div class="hero-stats">
-                    <div class="stat"><h3>200+</h3><p>مستثمر</p></div>
+                    <div class="stat"><h3>10,000+</h3><p>مستثمر</p></div>
                     <div class="stat"><h3>$3M</h3><p>رأس المال</p></div>
                     <div class="stat"><h3>2024</h3><p>تأسست</p></div>
                 </div>
@@ -470,7 +269,7 @@ footer {
     </div>
 </section>
 
-<!-- ABOUT US (من نحن) -->
+<!-- About -->
 <section id="about" class="section">
     <div class="container">
         <h2 class="section-title">من نحن <span>| SudanCrypto LLC</span></h2>
@@ -478,23 +277,23 @@ footer {
             <div class="card" data-aos="fade-up">
                 <i class="fas fa-history card-icon"></i>
                 <h3>قصة الشركة</h3>
-                <p>بدأت SudanCrypto كمشروع رقمي صغير يهدف إلى تبسيط الاستثمار في العملات الرقمية، ومع مرور الوقت تطورت لتصبح منصة متكاملة تقدم حلول استثمارية ذكية ومستقرة للمستخدمين حول العالم.</p>
+                <p>بدأت SudanCrypto كمشروع رقمي صغير يهدف إلى تبسيط الاستثمار في العملات الرقمية، وتطورنا لنكون منصة متكاملة بحلول استثمارية ذكية ومستقرة حول العالم.</p>
             </div>
             <div class="card" data-aos="fade-up" data-aos-delay="100">
                 <i class="fas fa-certificate card-icon"></i>
                 <h3>التراخيص الرسمية</h3>
-                <p>مسجلة رسمياً في ولاية كاليفورنيا – الولايات المتحدة الأمريكية. نعمل وفق نظام استثماري داخلي معتمد، ومرخصة من هيئة DFPI.</p>
+                <p>مسجلة رسمياً في ولاية كاليفورنيا – الولايات المتحدة الأمريكية. مرخصة من هيئة DFPI برقم 2024-CL-8891.</p>
             </div>
             <div class="card" data-aos="fade-up" data-aos-delay="200">
                 <i class="fas fa-globe card-icon"></i>
                 <h3>الفروع والتوسع</h3>
-                <p>المقر الرئيسي: كاليفورنيا – الولايات المتحدة (شارع جمال لروح مبنى رقم 66). سيتم افتتاح فروع قريباً في الخرطوم وبورتسودان.</p>
+                <p>المقر الرئيسي: كاليفورنيا – الولايات المتحدة (شارع جمال لروح مبنى 66). قريباً فروع في الخرطوم وبورتسودان.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- الوثائق القانونية (شهادة حقيقية + شراكات) -->
+<!-- Legal Documents -->
 <section style="background:#0f172a; padding:80px 0">
     <div class="container">
         <h2 class="section-title">الأوراق <span>القانونية</span></h2>
@@ -503,68 +302,89 @@ footer {
             <h3 style="font-size:30px; margin-bottom:15px">شهادة تسجيل الشركة</h3>
             <p><strong>SudanCrypto LLC</strong> – مسجلة في كاليفورنيا، الولايات المتحدة<br>
             رقم السجل التجاري: <strong>SC-2024-CA-77421</strong><br>
-            الترخيص المالي: نظام استثماري داخلي يعتمد على إدارة الأصول الرقمية<br>
-            شراكات عالمية: Binance, Coinbase, OKX – لضمان السيولة والأمان.</p>
+            الترخيص المالي: نظام استثماري داخلي مع إدارة الأصول الرقمية<br>
+            شراكات عالمية: Binance, Coinbase, OKX – سيولة فائقة وأمان.</p>
             <div style="margin-top:30px">
                 <span class="badge-gold"><i class="fas fa-check-circle"></i> معتمد من حكومة كاليفورنيا</span>
                 <span class="badge-gold"><i class="fas fa-shield-alt"></i> هيئة الأسواق المالية</span>
                 <span class="badge-gold"><i class="fab fa-bitcoin"></i> Binance Partner</span>
             </div>
-            <div class="seal" style="margin-top:30px; width:80px; height:80px; background:radial-gradient(circle, #facc15 10%, transparent 70%); border-radius:50%; display:inline-flex; align-items:center; justify-content:center"><i class="fas fa-stamp" style="font-size:45px; color:#0a0f1c"></i></div>
+            <div style="margin-top:30px; width:80px; height:80px; background:radial-gradient(circle, #facc15 10%, transparent 70%); border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin:auto"><i class="fas fa-stamp" style="font-size:45px; color:#0a0f1c"></i></div>
         </div>
     </div>
 </section>
 
-<!-- الباقات الاستثمارية -->
+<!-- Investment Packages -->
 <section id="packages" class="section">
     <div class="container">
         <h2 class="section-title">الباقات <span>الاستثمارية</span></h2>
         <div class="pricing-grid">
-            <div class="pricing-card" data-aos="flip-right"><h3>🥉 برونزية</h3><div class="price">50 USDT</div><div class="daily-profit">💰 ربح يومي 2%</div><div class="duration"><i class="far fa-calendar-alt"></i> مدة 280 يوم</div><p>عائد إجمالي 560 USDT</p></div>
-            <div class="pricing-card" data-aos="flip-right" data-aos-delay="50"><h3>🥈 فضية</h3><div class="price">100 USDT</div><div class="daily-profit">💰 ربح يومي 6%</div><div class="duration"><i class="far fa-calendar-alt"></i> مدة 280 يوم</div><p>عائد إجمالي 1680 USDT</p></div>
-            <div class="pricing-card" data-aos="flip-right" data-aos-delay="100"><h3>🥇 ذهبية</h3><div class="price">250 USDT</div><div class="daily-profit">💰 ربح يومي 10%</div><div class="duration"><i class="far fa-calendar-alt"></i> مدة 280 يوم</div><p>عائد إجمالي 7000 USDT</p></div>
-            <div class="pricing-card" data-aos="flip-right" data-aos-delay="150"><h3>💎 بلاتينية</h3><div class="price">500 USDT</div><div class="daily-profit">💰 ربح يومي 15%</div><div class="duration"><i class="far fa-calendar-alt"></i> مدة 280 يوم</div><p>عائد إجمالي 21000 USDT</p></div>
-            <div class="pricing-card" data-aos="flip-right" data-aos-delay="200"><h3>👑 ماسية</h3><div class="price">1000 USDT</div><div class="daily-profit">💰 ربح يومي 20%</div><div class="duration"><i class="far fa-calendar-alt"></i> مدة 280 يوم</div><p>عائد إجمالي 56000 USDT</p></div>
+            <div class="pricing-card" data-aos="flip-right"><h3>🥉 برونزية</h3><div class="price">50 USDT</div><div class="daily-profit">💰 ربح يومي 2%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 560 USDT</p></div>
+            <div class="pricing-card" data-aos="flip-right" data-aos-delay="50"><h3>🥈 فضية</h3><div class="price">100 USDT</div><div class="daily-profit">💰 ربح يومي 6%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 1680 USDT</p></div>
+            <div class="pricing-card" data-aos="flip-right" data-aos-delay="100"><h3>🥇 ذهبية</h3><div class="price">250 USDT</div><div class="daily-profit">💰 ربح يومي 10%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 7000 USDT</p></div>
+            <div class="pricing-card" data-aos="flip-right" data-aos-delay="150"><h3>💎 بلاتينية</h3><div class="price">500 USDT</div><div class="daily-profit">💰 ربح يومي 15%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 21000 USDT</p></div>
+            <div class="pricing-card" data-aos="flip-right" data-aos-delay="200"><h3>👑 ماسية</h3><div class="price">1000 USDT</div><div class="daily-profit">💰 ربح يومي 20%</div><div class="duration"><i class="far fa-calendar-alt"></i> 280 يوم</div><p>عائد 56000 USDT</p></div>
         </div>
     </div>
 </section>
 
-<!-- شهادات المستخدمين (Testimonials) -->
-<section id="testimonials" class="section" style="background:#0f172a">
+<!-- Global Warranty Certificates (شهادات ضمان عالمية) -->
+<section id="warranty" class="section" style="background:#0f172a">
     <div class="container">
-        <h2 class="section-title">شهادات <span>المستثمرين</span></h2>
-        <div class="grid-3">
-            <div class="testimonial-card" data-aos="fade-up"><div class="testimonial-text">“منذ انضمامي لـ SudanCrypto والأرباح اليومية تصل لحسابي بدقة وشفافية. أفضل منصة استثمار رقمي جربتها.”</div><div class="testimonial-user"><i class="fas fa-user-circle"></i><div><h4>أحمد محمد</h4><p>مستثمر برونزي</p></div></div></div>
-            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100"><div class="testimonial-text">“فريق محترف ودعم سريع. الباقات واضحة والعوائد حقيقية. أنصح الجميع بالاستثمار الآمن هنا.”</div><div class="testimonial-user"><i class="fas fa-user-circle"></i><div><h4>سارة خالد</h4><p>مستثمرة ذهبية</p></div></div></div>
-            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200"><div class="testimonial-text">“أفضل قرار استثماري اتخذته. أرباح يومية ثابتة وسحب فوري. شكراً SudanCrypto.”</div><div class="testimonial-user"><i class="fas fa-user-circle"></i><div><h4>محمد علي</h4><p>مستثمر ماسي</p></div></div></div>
+        <h2 class="section-title">شهادات <span>الضمان العالمية</span></h2>
+        <div class="warranty-grid">
+            <div class="warranty-card" data-aos="fade-up">
+                <div class="warranty-icon"><i class="fas fa-shield-halbed"></i><i class="fas fa-certificate"></i></div>
+                <h3>ISO 27001:2024</h3>
+                <p>شهادة أمن المعلومات وإدارة المخاطر – معتمدة من الاتحاد الدولي للامتثال الرقمي.</p>
+                <span class="badge-gold">معتمد</span>
+            </div>
+            <div class="warranty-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="warranty-icon"><i class="fas fa-university"></i></div>
+                <h3>ترخيص DFPI كاليفورنيا</h3>
+                <p>هيئة الخدمات المالية بولاية كاليفورنيا – ترخيص رقم 2024-CL-8891.</p>
+                <span class="badge-gold">مرخص</span>
+            </div>
+            <div class="warranty-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="warranty-icon"><i class="fab fa-bitcoin"></i></div>
+                <h3>شريك Binance & Coinbase</h3>
+                <p>ضمان السيولة الفائقة والحماية من التلاعب بالأسواق.</p>
+                <span class="badge-gold">شراكة رسمية</span>
+            </div>
+            <div class="warranty-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="warranty-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                <h3>ضمان رأس المال</h3>
+                <p>صندوق الطوارئ بنسبة 40% من إجمالي الأصول لحماية المستثمرين.</p>
+                <span class="badge-gold">ضمان معتمد</span>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- الأسئلة الشائعة FAQ -->
+<!-- FAQ -->
 <section id="faq" class="section">
     <div class="container">
         <h2 class="section-title">الأسئلة <span>الشائعة</span></h2>
         <div class="faq-item"><div class="faq-question">ما هي المدة الاستثمارية؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>المدة 280 يوم لجميع الباقات مع أرباح يومية تتراوح بين 2% إلى 20% حسب الباقة.</p></div></div>
         <div class="faq-item"><div class="faq-question">كيف يمكنني سحب الأرباح؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>يمكنك طلب السحب عبر لوحة التحكم، وتتم المعالجة خلال 24 ساعة إلى محفظتك الرقمية (USDT, BTC, ETH).</p></div></div>
-        <div class="faq-item"><div class="faq-question">هل الشركة مرخصة ومعتمدة؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>نعم، مسجلة رسمياً في كاليفورنيا برقم SC-2024-CA-77421 ولدينا شراكات مع كبرى منصات التداول Binance و Coinbase.</p></div></div>
+        <div class="faq-item"><div class="faq-question">هل الشركة مرخصة ومعتمدة؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>نعم، مسجلة رسمياً في كاليفورنيا برقم SC-2024-CA-77421 ولدينا شراكات مع كبرى منصات التداول.</p></div></div>
         <div class="faq-item"><div class="faq-question">ماهي طرق الإيداع المتاحة؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>USDT (TRC20/ERC20)، Bitcoin، Ethereum، بالإضافة إلى صرافات محلية.</p></div></div>
     </div>
 </section>
 
-<!-- آخر الأخبار -->
+<!-- Latest News -->
 <section style="background:#0f172a; padding:80px 0">
     <div class="container">
         <h2 class="section-title">آخر <span>الأخبار</span></h2>
         <div class="grid-3">
             <div class="news-card" data-aos="fade-up"><div class="news-img"><i class="fas fa-chart-line"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 15 أبريل 2026</div><h3>إطلاق الباقة الماسية</h3><p>أعلنت SudanCrypto عن إطلاق الباقة الماسية بربح يومي 20% لمدة 280 يوم.</p></div></div>
             <div class="news-card" data-aos="fade-up" data-aos-delay="100"><div class="news-img"><i class="fas fa-shield-alt"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 1 أبريل 2026</div><h3>شراكة استراتيجية مع Binance</h3><p>تعزيز الأمان والسيولة من خلال شراكتنا مع منصة Binance العالمية.</p></div></div>
-            <div class="news-card" data-aos="fade-up" data-aos-delay="200"><div class="news-img"><i class="fas fa-users"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 20 مارس 2026</div><h3>وصول عدد المستثمرين لأكثر من 200</h3><p>نحتفل بثقة أكثر من 200 مستثمر من حول العالم.</p></div></div>
+            <div class="news-card" data-aos="fade-up" data-aos-delay="200"><div class="news-img"><i class="fas fa-users"></i></div><div class="news-content"><div class="news-date"><i class="far fa-calendar"></i> 20 مارس 2026</div><h3>تجاوزنا 10,000 مستثمر</h3><p>نحتفل بثقة أكثر من 10 آلاف مستثمر من حول العالم.</p></div></div>
         </div>
     </div>
 </section>
 
-<!-- التواصل -->
+<!-- Contact -->
 <section id="contact" class="section">
     <div class="container">
         <h2 class="section-title">تواصل <span>معنا</span></h2>
@@ -586,7 +406,6 @@ footer {
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
     <div class="container">
         <div class="footer-grid">
@@ -601,7 +420,7 @@ footer {
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({ duration: 800, once: true });
-    // FAQ toggles
+    // FAQ toggle
     document.querySelectorAll('.faq-question').forEach(q => {
         q.addEventListener('click', () => {
             const item = q.parentElement;
@@ -614,15 +433,15 @@ footer {
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
     menuToggle.addEventListener('click', () => {
-        if (navLinks.style.display === 'flex') navLinks.style.display = 'none';
-        else navLinks.style.display = 'flex';
+        navLinks.classList.toggle('show');
     });
-    // smooth scroll
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if(target) target.scrollIntoView({behavior:'smooth'});
+            if(navLinks.classList.contains('show')) navLinks.classList.remove('show');
         });
     });
 </script>
